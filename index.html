@@ -1,0 +1,1125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>North East Feast — IIT Patna (Advanced)</title>
+  <meta name="description" content="North East Feast at IIT Patna — culture, food, traditions. A modern web experience." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <style>
+    /* --- ADVANCED STYLES & VARIABLES --- */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+    :root{
+      /* Color Palette */
+      --color-primary:#0f766e; /* Primary Teal */
+      --color-secondary:#0ea5a4; /* Secondary Cyan */
+      --color-tertiary:#3b82f6; /* Blue for contrast */
+      --color-muted:#6b7280;
+      --color-light-muted:#9ca3af;
+      --color-text-dark:#111827;
+      --color-bg:#f0f9ff; /* Very light blue background */
+      --color-card:#ffffff;
+
+      /* Spacing & Sizing */
+      --space-xl:40px;
+      --space-lg:32px;
+      --space-md:24px;
+      --radius-sm:12px;
+      --radius-lg:20px;
+      
+      /* Typography */
+      font-family: 'Inter', sans-serif;
+      font-size:16px;
+      line-height:1.6;
+      font-smooth:always;
+    }
+    
+    /* Simple reset and base styles */
+    *, *::before, *::after { box-sizing:border-box; }
+    body{
+      margin:0;
+      background-color: var(--color-bg);
+      color:var(--color-text-dark);
+      min-height:100vh;
+      /* Subtle animated background for depth */
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'><path fill='#e0f2f1' fill-opacity='1' d='M0,160L48,165.3C96,171,192,181,288,170.7C384,160,480,128,576,138.7C672,149,768,203,864,229.3C960,256,1056,256,1152,240C1248,224,1344,192,1392,176L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z'></path></svg>");
+      background-repeat: repeat-x;
+      background-size: 100% 400px;
+      background-position: top;
+      animation: waveMove 30s linear infinite alternate;
+    }
+    @keyframes waveMove {
+        from { background-position-x: 0; }
+        to { background-position-x: 100vw; }
+    }
+
+    h1,h2,h3{
+      color:var(--color-text-dark);
+      line-height:1.1;
+      font-weight:800;
+    }
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+        outline: 3px solid var(--color-tertiary); /* Custom focus ring for accessibility */
+        outline-offset: 2px;
+        border-radius: var(--radius-sm);
+    }
+
+
+    /* --- GLOBAL & NAVIGATION --- */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:var(--space-md);
+      padding:var(--space-md) var(--space-lg);
+      max-width:1400px; /* Wider container */
+      margin:0 auto;
+      background-color: var(--color-card);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Stronger shadow */
+    }
+    .logo{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      text-decoration:none;
+      color:inherit;
+    }
+    .logo .mark{
+      width:48px;
+      height:48px;
+      border-radius:12px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:900;
+      font-size:18px;
+      box-shadow:0 12px 25px rgba(15,118,110,0.3);
+      transition:transform 0.3s cubic-bezier(.17,.67,.83,.67); /* Smooth pop transition */
+    }
+    .logo .mark{
+      /* ... keep existing properties ... */
+      overflow: hidden; /* Added: clips the image to the 12px border radius */
+      padding: 0;      /* Added: ensures image fills the box */
+    }
+    .logo .mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Added: ensures image fills the 48x48 space without distortion */
+    }
+    .logo:hover .mark{
+        transform: scale(1.05) rotate(-2deg);
+    }
+    .logo-text{
+      font-weight:800;
+      font-size:20px;
+    }
+    nav a{
+      text-decoration:none;
+      color:var(--color-muted);
+      margin-left:var(--space-md);
+      font-weight:600;
+      position:relative;
+      padding: 5px 0;
+      transition:color 0.3s ease-in-out;
+    }
+    nav a::after{ /* Underline hover effect */
+        content:'';
+        position:absolute;
+        bottom:0;
+        left:0;
+        width:0;
+        height:3px;
+        background:var(--color-secondary);
+        transition:width 0.3s ease-out;
+    }
+    nav a:hover{ color:var(--color-primary); }
+    nav a:hover::after, nav a.active::after{ width:100%; } /* Active state for navigation */
+
+    nav a.cta{
+      background:linear-gradient(90deg, var(--color-secondary), var(--color-primary));
+      color:white;
+      padding:10px 18px;
+      border-radius:var(--radius-sm);
+      font-weight:700;
+      box-shadow:0 8px 20px rgba(15,118,110,0.3);
+      transition:transform 0.2s, box-shadow 0.2s;
+      margin-left: auto; /* Changed: pushes button to right without hard margin */
+      display: inline-block; /* Added: ensures proper sizing */
+      white-space: nowrap; /* Added: prevents "Participate" from dropping to a new line */
+      text-align: center;
+      font-size: 14px; /* Slightly smaller for mobile compatibility */
+    }
+    nav a.cta:hover{
+      transform:translateY(-2px) scale(1.02);
+      box-shadow:0 12px 25px rgba(15,118,110,0.4);
+    }
+
+    /* --- MAIN CONTENT & LAYOUT --- */
+    main{
+      max-width:1400px;
+      margin:var(--space-lg) auto;
+      padding:0 var(--space-md);
+      display:grid;
+      grid-template-columns: 1fr 400px;
+      gap:var(--space-lg);
+      align-items:start;
+    }
+    .card{
+      background:var(--color-card);
+      padding:var(--space-md);
+      border-radius:var(--radius-lg);
+      box-shadow:0 15px 50px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.05);
+      border:1px solid rgba(255,255,255,0.1); /* Subtle white border */
+      backdrop-filter: blur(8px); /* Glassmorphism effect */
+      background-color: rgba(255, 255, 255, 0.85); /* Slightly transparent white */
+    }
+    .hero{
+      padding:var(--space-xl);
+      background:linear-gradient(160deg, rgba(14, 165, 164, 0.1), rgba(15, 118, 110, 0.05));
+    }
+    .greet{
+      display:flex;
+      gap:var(--space-lg);
+      align-items:center;
+      margin-bottom:var(--space-md);
+    }
+    .greet h1{
+      margin:0;
+      font-size:42px;
+      font-weight:900;
+      letter-spacing:-1px;
+    }
+    .badge{
+      font-size:15px;
+      padding:10px 18px;
+      border-radius:999px;
+      background:var(--color-card);
+      box-shadow:0 6px 15px rgba(0,0,0,0.1);
+      color:var(--color-primary);
+      font-weight:700;
+      white-space:nowrap;
+      /* Animation */
+      animation: pulse 4s infinite cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(15,118,110, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(15,118,110, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(15,118,110, 0); }
+    }
+    .lead{
+      margin-top:12px;
+      color:var(--color-muted);
+      font-size:19px;
+      font-weight:500;
+    }
+    
+    /* Facts/Features Grid - Advanced Hover */
+    .facts{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:var(--space-md);
+      margin-top:var(--space-md);
+    }
+    .fact{
+      padding:var(--space-md);
+      border-radius:var(--radius-sm);
+      background:rgba(15,118,110,0.06);
+      border:1px solid rgba(15,118,110,0.1);
+      font-weight:600;
+      transition:background 0.3s, transform 0.3s ease-out;
+      cursor:pointer;
+    }
+    .fact:hover{
+      background:rgba(15,118,110,0.15);
+      transform:translateY(-3px) scale(1.01); /* Lift and scale on hover */
+      box-shadow: 0 5px 15px rgba(15,118,110,0.15);
+    }
+    .fact strong{
+      font-size:18px;
+      color:var(--color-text-dark);
+      display:block;
+      margin-bottom:6px;
+    }
+    .fact .muted{
+      font-weight:400;
+      font-size:15px;
+    }
+    .side{
+      position:sticky;
+      top:var(--space-lg);
+      align-self:start;
+    }
+    .event-meta{
+      padding:var(--space-md);
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+    .meta-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom:1px dashed rgba(0,0,0,0.1); /* Dashed separator */
+      padding-bottom:12px;
+    }
+    .meta-row:last-child{
+      border-bottom:none;
+      padding-bottom:0;
+    }
+    .meta-row strong{
+      font-size:17px;
+      font-weight:700;
+    }
+    .cta-btn{
+      display:block;
+      width:100%;
+      text-align:center;
+      padding:16px;
+      border-radius:var(--radius-sm);
+      text-decoration:none;
+      font-weight:800;
+      margin-top:16px;
+      background:linear-gradient(45deg, var(--color-tertiary), #0ea5e9); /* Blue-to-Cyan gradient */
+      color:white;
+      font-size:18px;
+      box-shadow:0 12px 30px rgba(59, 130, 246, 0.3);
+      transition:transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55), box-shadow 0.3s; /* Springy transition */
+    }
+    .cta-btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 15px 35px rgba(59, 130, 246, 0.4);
+    }
+
+    /* Quick Links Card */
+    .quick-links a{
+      text-decoration:none;
+      color:var(--color-text-dark);
+      padding:10px 12px;
+      display:block;
+      border-radius:var(--radius-sm);
+      transition: background-color 0.2s, color 0.2s, padding 0.2s;
+      font-weight:500;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .quick-links a:hover{
+      background-color:var(--color-bg);
+      color:var(--color-secondary);
+      padding-left:16px;
+    }
+footer{
+      max-width:1400px;
+      margin:var(--space-xl) auto 0 auto;
+      padding:var(--space-md);
+      color:var(--color-light-muted);
+      font-size:15px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-top:1px solid rgba(0,0,0,0.08);
+    }
+    .muted{color:var(--color-muted)}
+    ul.bullets{
+      padding-left:24px;
+      margin:16px 0;
+      color:var(--color-muted);
+      font-size:15px;
+    }
+    
+    /* --- REGISTRATION PAGE STYLES (Focus on Form UX) --- */
+    .reg-page-wrapper{ 
+      max-width:800px; 
+      margin:var(--space-lg) auto;
+      padding:var(--space-lg);
+      border-radius:var(--radius-lg);
+      box-shadow:0 15px 50px rgba(0,0,0,0.08);
+      border:1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+    .reg-header{ 
+      display:flex;
+      justify-content:flex-start;
+      align-items:center;
+      gap:var(--space-md);
+      margin-bottom:var(--space-md);
+    }
+    .reg-header a{ 
+      color:var(--color-secondary); 
+      text-decoration:none; 
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      transition:color 0.2s;
+    }
+    .reg-header a:hover{ color:var(--color-primary); }
+    .reg-header h2{margin:0;font-size:28px; font-weight:800}
+    
+    form{
+      display:grid;
+      grid-template-columns:repeat(3,1fr); /* Three column grid for advanced layout */
+      gap:var(--space-lg);
+      margin-top:var(--space-md);
+    }
+    .form-group{
+        grid-column: span 1; /* Default to one column */
+    }
+    label{
+      display:block;
+      font-size:14px;
+      margin-bottom:6px;
+      color:var(--color-text-dark);
+      font-weight:700;
+    }
+    input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+      width:100%;
+      padding:12px 16px;
+      border-radius:var(--radius-sm);
+      border:2px solid #e5e7eb; /* Slightly thicker border */
+      outline:none;
+      font-size:16px;
+      background:var(--color-bg);
+      color:var(--color-text-dark);
+      transition:border-color 0.3s, box-shadow 0.3s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color:var(--color-tertiary);
+      box-shadow:0 0 0 4px rgba(59, 130, 246, 0.2);
+      background:var(--color-card);
+    }
+    select{
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='#6b7280'><path fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z' clip-rule='evenodd' /></svg>");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        background-size: 18px 18px;
+    }
+    textarea{min-height:160px; grid-column:1/-1;} /* Full width for textarea */
+    .full{grid-column:1/-1} /* Utility for full width form groups */
+    .actions{
+      display:flex;
+      gap:var(--space-md);
+      justify-content:flex-end;
+      margin-top:var(--space-md);
+      grid-column:1/-1;
+    }
+    button{
+      padding:14px 24px;
+      border-radius:var(--radius-sm);
+      border:0;
+      font-weight:700;
+      cursor:pointer;
+      font-size:17px;
+      transition:transform 0.2s, box-shadow 0.2s;
+    }
+    button:hover{ transform:translateY(-1px); }
+    button.primary{ 
+        background:var(--color-primary); 
+        color:#fff;
+        box-shadow:0 8px 15px rgba(15,118,110,0.3);
+    }
+    button.ghost{ 
+        background:var(--color-bg); 
+        color:var(--color-text-dark); 
+        border:1px solid #d1d5db;
+        box-shadow:none;
+    }
+    /* --- 3D CYLINDRICAL CAROUSEL STYLES --- */
+    .hero-swiper-container {
+      width: 100%;
+      padding: 40px 0;
+      overflow: hidden;
+    }
+    .swiper {
+      width: 100%;
+      padding-top: 20px;
+      padding-bottom: 60px;
+    }
+    .swiper-slide {
+      background-position: center;
+      background-size: cover;
+      width: 320px; 
+      height: 450px; 
+      border-radius: var(--radius-lg);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      background-color: #fff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+    }
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+      padding: var(--space-md);
+      color: white;
+    }
+    .slide-content h3 { color: white; margin: 0; font-size: 22px; }
+    .swiper-pagination-bullet-active { background: var(--color-primary) !important; }
+    .note{font-size:14px;color:var(--color-muted); margin-top:0;}
+    .success{
+      padding:var(--space-md); border-radius:var(--radius-sm); 
+      background:linear-gradient(180deg,#ecfdf5,#f0fdf4);
+      border:1px solid #34d399; margin-top:var(--space-md); color:#064e3b; 
+      font-weight:600; display:none; opacity:0;
+      transition:opacity 0.5s ease-in-out;
+    }
+    .consent-wrapper{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      grid-column:1/-1;
+      margin-top: -10px;
+    }
+    .consent-wrapper label{
+      margin:0;
+      font-weight:500;
+      font-size:14px;
+      color:var(--color-muted);
+    }
+
+    /* --- CONTENT PAGES STYLES (Advanced Grid) --- */
+    .content-page-wrapper {
+        max-width: 1200px;
+        margin: var(--space-lg) auto;
+        padding: 0 var(--space-md);
+    }
+    .content-page-header h2{
+        font-size: 32px;
+        margin-bottom: 20px;
+        color: var(--color-primary);
+    }
+    .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: var(--space-lg);
+        margin-top: var(--space-md);
+    }
+    .content-item {
+        background: var(--color-card);
+        padding: var(--space-md);
+        border-radius: var(--radius-lg);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+        border-left: 5px solid var(--color-secondary);
+        transition: transform 0.3s ease-out, box-shadow 0.3s;
+    }
+    .content-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+    .content-item h4 {
+        margin: 0 0 10px 0;
+        font-size: 22px;
+        color: var(--color-text-dark);
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        padding-bottom: 8px;
+    }
+    .content-item p {
+        font-size: 15px;
+        color: var(--color-muted);
+    }
+    /* --- ABOUT DEVELOPER STYLES --- */
+    .developer-section {
+      margin-top: var(--space-xl);
+      padding: var(--space-lg);
+      background: linear-gradient(135deg, #ffffff, #f0fdfa);
+      border: 1px solid rgba(15, 118, 110, 0.1);
+    }
+    .dev-flex {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+    }
+    .dev-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 800;
+      flex-shrink: 0;
+      box-shadow: 0 10px 20px rgba(15, 118, 110, 0.2);
+    }
+    .dev-content h3 { margin: 0 0 8px 0; color: var(--color-primary); }
+    .dev-content p { margin: 0; font-size: 15px; color: var(--color-muted); }
+    .dev-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(15, 118, 110, 0.1);
+      color: var(--color-primary);
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+    /* responsive */
+    @media (max-width:1200px){
+        main{ grid-template-columns:1fr; padding:0 var(--space-md); }
+        .side{ margin-top:var(--space-md); position:static; }
+        header{padding:20px 24px;}
+        .hero{padding:var(--space-md);}
+        .content-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width:768px){
+      .greet{flex-direction:column; align-items:flex-start}
+      .greet h1{font-size:36px;}
+      .facts{grid-template-columns:1fr}
+      form {grid-template-columns:1fr}
+      .actions{justify-content:stretch; flex-direction:column}
+      .reg-header{flex-direction:column; align-items:flex-start;}
+      .reg-header h2{margin-top:10px}
+      .reg-page-wrapper{padding:var(--space-md); margin:20px auto;}
+    }
+    @media (max-width:480px){
+      nav{display:none}
+      header{justify-content:center}
+      .logo{ flex-direction:column; text-align:center; gap:6px; }
+      .logo .mark{width:40px; height:40px;}
+      .logo-text{font-size:16px;}
+      header {
+        flex-wrap: wrap; /* Allows the button to drop below the logo if space is zero */
+        justify-content: center;
+        gap: 10px;
+      }
+      nav a.cta {
+        margin-left: 0; 
+        width: auto;
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+    }
+
+    /* Simple page toggle utility */
+    .page-hidden { display: none !important; }
+  </style>
+
+  <script>
+    // Advanced JS with better state management and navigation handling
+    function showPage(pageId) {
+        // Hide all pages
+        document.querySelectorAll('body > div[id$="-page"]').forEach(page => {
+            page.classList.add('page-hidden');
+        });
+        // Show the target page
+        const targetPage = document.getElementById(pageId);
+        if (targetPage) {
+            targetPage.classList.remove('page-hidden');
+            window.location.hash = pageId; // Update URL hash for sharing/bookmarking
+
+            // Update active navigation state
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === pageId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('regForm');
+        const successMessage = document.querySelector('.success');
+        
+        if (form) {
+          form.addEventListener('submit', function(e) {
+              // We do NOT use e.preventDefault() here if we want a simple redirect
+              // Or, use the code below for a seamless AJAX submission:
+              e.preventDefault();
+              
+              const formData = new FormData(form);
+              
+              fetch(form.action, {
+                  method: 'POST',
+                  body: formData,
+                  headers: {
+                      'Accept': 'application/json'
+                  }
+              }).then(response => {
+                  if (response.ok) {
+                      // Show your success message
+                      successMessage.style.display = 'block';
+                      setTimeout(() => { successMessage.style.opacity = '1'; }, 10);
+                      form.reset();
+                      
+                      // Hide message after a delay
+                      setTimeout(() => {
+                          successMessage.style.opacity = '0';
+                          setTimeout(() => { successMessage.style.display = 'none'; }, 500);
+                      }, 5000);
+                  } else {
+                      alert("Oops! There was a problem submitting your form");
+                  }
+              }).catch(error => {
+                  alert("Error: Could not reach the server.");
+              });
+          });
+      }
+        
+        // Initial page load based on hash
+        const initialPage = window.location.hash.substring(1) || 'index-page';
+        showPage(initialPage);
+    });
+
+    // Handle hash changes (including browser back/forward buttons)
+    window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+            showPage(hash);
+        }
+    });
+
+  </script>
+</head>
+<body>
+  <div id="index-page">
+    <header>
+      <a class="logo" href="#index-page" onclick="showPage('index-page')">
+        <div class="mark">
+          <img src="./logo.jpeg" alt="Logo">
+        </div>
+        <div>
+          <div class="logo-text">North East Fest</div>
+          <div class="logo-subtext">IIT Patna — Culture & Cuisine</div>
+        </div>
+      </a>
+      <nav>
+        <a href="#index-page" onclick="showPage('index-page')" class="active">Home</a>
+        <a href="#food-page" onclick="showPage('food-page')">Food & Delicacies</a>
+        <a href="#attire-page" onclick="showPage('attire-page')">Traditional Attire</a>
+        <a href="#index-page" onclick="showPage('index-page'); setTimeout(()=>window.scrollTo(0,document.body.scrollHeight),100)">About Dev</a>
+        <a href="mailto:cultural@iitp.ac.in">Contact</a>
+        <a href="#register-page" class="cta" onclick="showPage('register-page')">Join Event</a>
+      </nav>
+    </header>
+    <section class="hero-swiper-container">
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="./pic1.jpeg"><div class="slide-content"><h3>Assam: The Golden Silk</h3></div></div>
+          <div class="swiper-slide"><img src="./pic2.jpeg"><div class="slide-content"><h3>Nagaland: Warrior Beats</h3></div></div>
+          <div class="swiper-slide"><img src="./pic3.jpeg"><div class="slide-content"><h3>Manipur: Jewel of India</h3></div></div>
+          <div class="swiper-slide"><img src="./pic4.jpeg"><div class="slide-content"><h3>Meghalaya: Cloud Abode</h3></div></div>
+          <div class="swiper-slide"><img src="./pic5.jpeg"><div class="slide-content"><h3>Mizoram: Land of Hills</h3></div></div>
+          <div class="swiper-slide"><img src="./pic6.jpeg"><div class="slide-content"><h3>Arunachal: Sunrise Land</h3></div></div>
+          <div class="swiper-slide"><img src="./pic7.jpeg"><div class="slide-content"><h3>Tripura: Royal Heritage</h3></div></div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+<main>
+      <section class="hero card" aria-labelledby="hero-title">
+        <div class="greet">
+          <div style="flex:1">
+            <h1 id="hero-title">Kumbriksudung — Welcome to the North East Fest 👋</h1>
+            <div class="lead">Join us at IIT Patna for a colourful celebration of the traditions, food, music and people of India's **North Eastern states**.</div>
+          </div>
+          <div class="badge">Cultural Showcase · Free Entry</div>
+        </div>
+
+        <div style="margin-top:var(--space-md)">
+          <h3 style="margin:0 0 16px 0; font-size:24px;">Explore the Richness of the North East</h3>
+          <p class="muted">
+            The North East Feast is an annual **cultural immersion** celebrating the vibrancy, arts, and traditions from the **eight sister states**. It's an invaluable chance to connect with diverse communities and their rich histories.
+          </p>
+
+          <div class="facts" role="list" aria-label="Key highlights">
+            <div class="fact" role="listitem">
+              <strong>🍜 Culinary Journey</strong>
+              <div class="muted">Experience bold, indigenous flavours: smoked meats, aromatic bamboo shoots, and unique fermented delights.</div>
+            </div>
+            <div class="fact" role="listitem">
+              <strong>🧣 Handloom & Textiles</strong>
+              <div class="muted">Discover the artistry of handwoven textiles like luxurious Muga silk and the iconic, colourful Naga shawls.</div>
+            </div>
+            <div class="fact" role="listitem">
+              <strong>🥁 Live Performances</strong>
+              <div class="muted">Feel the rhythm of Bihu, the power of Naga Warrior dances, and the elegance of Manipuri classical forms.</div>
+            </div>
+            <div class="fact" role="listitem">
+              <strong>🌲 Eco-Craftsmanship</strong>
+              <div class="muted">Masterful weaving, delicate bamboo and cane crafts, and sustainable products showcasing local skill.</div>
+            </div>
+          </div>
+
+          <h3 style="margin-top:var(--space-md); font-size:22px;">Why Immerse Yourself?</h3>
+          <ul class="bullets">
+            <li>Taste **authentic regional dishes** prepared by talented community cooks.</li>
+            <li>Enjoy **dynamic cultural performances** and interactive craft workshops.</li>
+            <li>Support indigenous artisans by acquiring unique **handcrafted goods** and textiles.</li>
+          </ul>
+
+          <blockquote class="muted" style="margin-top:16px;font-size:15px; padding:12px; border-left:4px solid var(--color-tertiary); background-color:rgba(59, 130, 246, 0.05); border-radius:var(--radius-sm)">
+            💡 **Volunteer & Participate:** Are you a student, faculty member, or local resident interested in hosting a stall or performing? Please use the registration page to secure your spot!
+          </blockquote>
+        </div>
+      </section>
+
+      <aside class="side">
+        <div class="card event-meta">
+          <div class="meta-row"><strong>📅 Event Date</strong><span class="muted">TBD — Planning in progress</span></div>
+          <div class="meta-row"><strong>📍 Primary Venue</strong><span class="muted">IIT Patna — Open Grounds & Arena</span></div>
+          <div class="meta-row"><strong>🤝 Organised By</strong><span class="muted">IITP Cultural & Student Affairs Board</span></div>
+          <a class="cta-btn" href="#register-page" onclick="showPage('register-page')" aria-label="Register for the event">Register for Participation / Stall →</a>
+        </div>
+
+        <div class="card quick-links" style="margin-top:var(--space-md)">
+          <h4 style="margin:0 0 14px 0; font-size:20px; font-weight:700;">Explore Key Sections</h4>
+          <div role="navigation" style="display:flex;flex-direction:column;gap:4px">
+            <a href="#food-page" onclick="showPage('food-page')"><span>&#127836;</span> North East Cuisine Guide</a>
+            <a href="#attire-page" onclick="showPage('attire-page')"><span>&#129377;</span> Traditional Weaves & Attire</a>
+            <a href="#register-page" onclick="showPage('register-page')"><span>&#10004;</span> Stall / Volunteer Registration</a>
+            <a href="mailto:cultural@iitp.ac.in"><span>&#9993;</span> Direct Contact / Enquiries</a>
+          </div>
+        </div>
+      </aside>
+    </main>
+    <section class="content-page-wrapper">
+      <div class="card developer-section">
+        <div class="dev-flex">
+          <div class="dev-avatar">BP</div>
+          <div class="dev-content">
+            <h3>About the Developer</h3>
+            <strong>Biswajit Patgiri</strong>
+            <p>Student at IIT Patna & IIM Bodh Gaya</p>
+            <div class="dev-badge">C++ Developer</div>
+            <div class="dev-badge">Web Enthusiast</div>
+            <p style="margin-top:12px; font-style: italic;">
+              "I am a passionate software developer with a strong interest in C++ programming and web development. 
+              I developed this Northeast Fest website to digitally showcase the rich culture, traditions, and diversity 
+              of Northeast India through a modern and user-friendly platform."
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <div>© 2025 **IIT Patna** · North East Fest Project</div>
+      <div class="muted">Cultural Board: <a href="mailto:cultural@iitp.ac.in" style="color:var(--color-muted); text-decoration:none;">cultural@iitp.ac.in</a></div>
+    </footer>
+  </div>
+
+  <div id="register-page" class="page-hidden">
+    <header>
+      <a class="logo" href="#index-page" onclick="showPage('index-page')">
+        <div class="mark">
+          <img src="./logo.jpeg" alt="Logo">
+        </div>
+        <div>
+          <div class="logo-text">North East Fest</div>
+          <div class="logo-subtext">IIT Patna — Culture & Cuisine</div>
+        </div>
+      </a>
+      <nav>
+        <a href="#index-page" onclick="showPage('index-page')">Home</a>
+        <a href="#food-page" onclick="showPage('food-page')">Food & Delicacies</a>
+        <a href="#attire-page" onclick="showPage('attire-page')">Traditional Attire</a>
+        <a href="#index-page" onclick="showPage('index-page'); setTimeout(()=>window.scrollTo(0,document.body.scrollHeight),100)">About Dev</a>
+        <a href="mailto:cultural@iitp.ac.in">Contact</a>
+        <a href="#register-page" class="cta active" onclick="showPage('register-page')">Join Event</a>
+      </nav>
+    </header>
+    <div class="reg-page-wrapper">
+      <div class="reg-header">
+        <a href="#index-page" onclick="showPage('index-page')">← Back to Home</a>
+        <h2>&#9989; Event Participation & Stall Registration</h2>
+      </div>
+      <p class="note">Please fill out this form to express interest in hosting a cultural stall, food vendor stand, or performing at the event.</p>
+      
+      <div class="success" role="alert" style="opacity:0">
+          **Success!** Your registration form has been received by the Cultural Board. We will contact you soon with a confirmation and next steps. Thank you for your interest!
+      </div>
+      
+      <form id="regForm" action="https://formspree.io/f/xojqnwaa" method="POST" aria-live="polite">
+        <div class="form-group">
+          <label for="fullName">Full Name *</label>
+          <input type="text" id="fullName" name="fullName" placeholder="Arun Thapa" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" placeholder="arun.t@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="+91-9876543210" />
+        </div>
+        
+        <div class="form-group full">
+            <label for="affiliation">Affiliation / Group Name *</label>
+            <input type="text" id="affiliation" name="affiliation" placeholder="IITP Student / Self-Employed Artisan / Cultural Group" required />
+        </div>
+
+        <div class="form-group">
+          <label for="role">Desired Role *</label>
+          <select id="role" name="role" required>
+            <option value="">Select a Role</option>
+            <option value="food-vendor">Food Vendor/Stall</option>
+            <option value="cultural-stall">Cultural/Craft Stall</option>
+            <option value="performer">Performer (Music/Dance)</option>
+            <option value="volunteer">Event Volunteer</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="state">State/UT Represented *</label>
+          <select id="state" name="state" required>
+            <option value="">Select a State/UT</option>
+            <optgroup label="North Eastern States">
+              <option value="arunachal">Arunachal Pradesh</option>
+              <option value="assam">Assam</option>
+              <option value="manipur">Manipur</option>
+              <option value="meghalaya">Meghalaya</option>
+              <option value="mizoram">Mizoram</option>
+              <option value="nagaland">Nagaland</option>
+              <option value="sikkim">Sikkim</option>
+              <option value="tripura">Tripura</option>
+            </optgroup>
+            <optgroup label="Other States/UTs">
+              <option value="andaman-nicobar">Andaman and Nicobar Islands</option>
+              <option value="andhra-pradesh">Andhra Pradesh</option>
+              <option value="bihar">Bihar</option>
+              <option value="chandigarh">Chandigarh</option>
+              <option value="chhattisgarh">Chhattisgarh</option>
+              <option value="dadra-nagar-haveli-daman-diu">Dadra and Nagar Haveli and Daman and Diu</option>
+              <option value="delhi">Delhi</option>
+              <option value="goa">Goa</option>
+              <option value="gujarat">Gujarat</option>
+              <option value="haryana">Haryana</option>
+              <option value="himachal-pradesh">Himachal Pradesh</option>
+              <option value="jammu-kashmir">Jammu and Kashmir</option>
+              <option value="jharkhand">Jharkhand</option>
+              <option value="karnataka">Karnataka</option>
+              <option value="kerala">Kerala</option>
+              <option value="ladakh">Ladakh</option>
+              <option value="lakshadweep">Lakshadweep</option>
+              <option value="madhya-pradesh">Madhya Pradesh</option>
+              <option value="maharashtra">Maharashtra</option>
+              <option value="puducherry">Puducherry</option>
+              <option value="punjab">Punjab</option>
+              <option value="rajasthan">Rajasthan</option>
+              <option value="tamil-nadu">Tamil Nadu</option>
+              <option value="telangana">Telangana</option>
+              <option value="uttar-pradesh">Uttar Pradesh</option>
+              <option value="uttarakhand">Uttarakhand</option>
+              <option value="west-bengal">West Bengal</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="size">Estimated Space Needed</label>
+          <select id="size" name="size">
+            <option value="small">Small (3x3m - single table)</option>
+            <option value="medium">Medium (6x6m - standard stall)</option>
+            <option value="large">Large (Performance area / multiple stalls)</option>
+          </select>
+        </div>
+
+        <div class="form-group full">
+          <label for="details">Details of your Stall / Performance (Required)</label>
+          <textarea id="details" name="details" placeholder="Describe the dishes you will sell, the crafts you will display, or the nature of your performance (e.g., 'Selling Smoked Pork with Bamboo Shoot and Axone', 'Performing Bihu Dance')." required></textarea>
+        </div>
+        
+        <div class="consent-wrapper">
+          <input type="checkbox" id="consent" name="consent" required />
+          <label for="consent">I consent to the use of my data for event coordination purposes.</label>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="ghost" onclick="document.getElementById('regForm').reset()">Reset Form</button>
+          <button type="submit" class="primary">Submit Registration</button>
+        </div>
+      </form>
+    </div>
+
+    <footer>
+      <div>© 2025 **IIT Patna** · North East Fest Project</div>
+      <div class="muted">Cultural Board: <a href="mailto:cultural@iitp.ac.in" style="color:var(--color-muted); text-decoration:none;">cultural@iitp.ac.in</a></div>
+    </footer>
+  </div>
+
+  <div id="food-page" class="page-hidden">
+    <header>
+      <a class="logo" href="#index-page" onclick="showPage('index-page')">
+        <div class="mark">
+          <img src="./logo.jpeg" alt="Logo">
+        </div>
+        <div>
+          <div class="logo-text">North East Fest</div>
+          <div class="logo-subtext">IIT Patna — Culture & Cuisine</div>
+        </div>
+      </a>
+      <nav>
+        <a href="#index-page" onclick="showPage('index-page')">Home</a>
+        <a href="#food-page" onclick="showPage('food-page')" class="active">Food & Delicacies</a>
+        <a href="#attire-page" onclick="showPage('attire-page')">Traditional Attire</a>
+        <a href="#index-page" onclick="showPage('index-page'); setTimeout(()=>window.scrollTo(0,document.body.scrollHeight),100)">About Dev</a>
+        <a href="mailto:cultural@iitp.ac.in">Contact</a>
+        <a href="#register-page" class="cta" onclick="showPage('register-page')">Join Event</a>
+      </nav>
+    </header>
+    
+    <div class="content-page-wrapper">
+        <div class="content-page-header">
+            <h2>🍜 North East Cuisine: A Culinary Map</h2>
+            <p class="lead muted">Discover the unique, bold, and flavourful gastronomy of the seven sister states and Sikkim. Prepare your palate for a true feast!</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="content-item">
+                <h4>Assam (Axomiya)</h4>
+                <p>Characterized by light preparation with little spice and strong aromatic herbs. Must-try: **Khar** (a dish with a signature alkaline ingredient), **Tenga** (sour fish curry), and **Pithas** (rice cakes).</p>
+            </div>
+            <div class="content-item">
+                <h4>Nagaland (Naga)</h4>
+                <p>Famous for its liberal use of smoked meat and fermented products. Try: **Smoked Pork with Axone** (fermented soybean) or **Bamboo Shoot** (Baste-tenga), often accompanied by fiery King Chilli.</p>
+            </div>
+            <div class="content-item">
+                <h4>Manipur (Meitei)</h4>
+                <p>Known for its clean, oil-less cooking style and abundance of fish and vegetables. Key dishes include **Eromba** (a vegetable-fish mash) and **Singju** (a spicy fermented salad).</p>
+            </div>
+            <div class="content-item">
+                <h4>Meghalaya (Khasi, Garo)</h4>
+                <p>Staple food is rice, often accompanied by meat, especially pork. Delicacies: **Jadoh** (rice cooked with meat), **Doh-Khleh** (pork salad), and **Nakham Bitchi** (Garo soup).</p>
+            </div>
+            <div class="content-item">
+                <h4>Mizoram (Mizo)</h4>
+                <p>The cuisine is generally mild but can be made spicy with chilies. Must-have: **Bai** (a vegetable stew), **Misa Mach Poora** (grilled shrimp), and **Vawksa Rep** (smoked pork).</p>
+            </div>
+            <div class="content-item">
+                <h4>Arunachal Pradesh</h4>
+                <p>Simple preparations with minimal spices, relying on fermentation and smoking. Key dishes: **Apong** (rice beer), **Lukter** (meat cooked with King Chilli), and various **Thukpas** and Momos.</p>
+            </div>
+            <div class="content-item">
+                <h4>Tripura (Tripuri)</h4>
+                <p>Traditional cuisine often uses **Berma** (fermented fish) as a key flavoring agent. Try: **Mui Borok** (the classic Tripuri meal) and **Chakhwi** (bamboo shoot stew).</p>
+            </div>
+            <div class="content-item">
+                <h4>Sikkim (Lepcha, Bhutia)</h4>
+                <p>Popular for its Himalayan cuisine influences. Signature dishes: **Momos** (dumplings), **Thukpa** (noodle soup), **Sha Phaley** (bread stuffed with meat/cheese), and locally brewed beverages.</p>
+            </div>
+        </div>
+
+        <blockquote class="muted" style="margin-top:var(--space-lg);font-size:15px; padding:12px; border-left:4px solid var(--color-primary); background-color:rgba(15,118,110,0.05); border-radius:var(--radius-sm)">
+            **Did you know?** Many North Eastern kitchens use far less oil compared to other Indian regions, favoring boiling, smoking, and fermenting to preserve and enhance the natural flavors of the ingredients.
+        </blockquote>
+
+    </div>
+
+    <footer>
+      <div>© 2025 **IIT Patna** · North East Fest Project</div>
+      <div class="muted">Cultural Board: <a href="mailto:cultural@iitp.ac.in" style="color:var(--color-muted); text-decoration:none;">cultural@iitp.ac.in</a></div>
+    </footer>
+  </div>
+
+  <div id="attire-page" class="page-hidden">
+    <header>
+      <a class="logo" href="#index-page" onclick="showPage('index-page')">
+        <div class="mark">
+          <img src="./logo.jpeg" alt="Logo">
+        </div>
+        <div>
+          <div class="logo-text">North East Fest</div>
+          <div class="logo-subtext">IIT Patna — Culture & Cuisine</div>
+        </div>
+      </a>
+      <nav>
+        <a href="#index-page" onclick="showPage('index-page')">Home</a>
+        <a href="#food-page" onclick="showPage('food-page')">Food & Delicacies</a>
+        <a href="#attire-page" onclick="showPage('attire-page')" class="active">Traditional Attire</a>
+        <a href="#index-page" onclick="showPage('index-page'); setTimeout(()=>window.scrollTo(0,document.body.scrollHeight),100)">About Dev</a>
+        <a href="mailto:cultural@iitp.ac.in">Contact</a>
+        <a href="#register-page" class="cta" onclick="showPage('register-page')">Join Event</a>
+      </nav>
+    </header>
+    
+    <div class="content-page-wrapper">
+        <div class="content-page-header">
+            <h2>&#129377; Traditional Attire & Handloom</h2>
+            <p class="lead muted">The region is a textile powerhouse. Explore the vibrant colours, intricate weaves, and unique dressing styles that define each state's cultural identity.</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="content-item">
+                <h4>Assam</h4>
+                <p>Famous for three types of indigenous silk: **Muga**, **Eri**, and **Pat**. Women wear the **Mekhela Chadar**, a two-piece drape, while men wear the **Suria** (dhoti) and **Chadar** (shawl).</p>
+            </div>
+            <div class="content-item">
+                <h4>Nagaland</h4>
+                <p>Known for its distinctive, heavy, and colourful **Shawls** that signify status and tribe, such as the **Tsungkotepsu** (Ao tribe) and **Rongkhim** (Yimchunger tribe). The attire is often paired with elaborate beadwork and metal accessories.</p>
+            </div>
+            <div class="content-item">
+                <h4>Manipur</h4>
+                <p>The women wear the beautiful **Phanek** (a handloom wrap-around skirt) and the **Innaphi** (a delicate shawl). The Lai-Phi, worn by deities, is a spectacular sight.</p>
+            </div>
+            <div class="content-item">
+                <h4>Meghalaya</h4>
+                <p>Khasi women wear the **Jainsem** and **Jainkup** (a dress-like cloth). Garo women wear a wrap-around called **Dhak-Munda**, characterized by bold stripes and colourful geometric patterns.</p>
+            </div>
+            <div class="content-item">
+                <h4>Mizoram</h4>
+                <p>The iconic **Puanchei** is a colourful, intricately woven skirt, worn during major festivals. The **Puan** is the common wrap-around textile, with designs often reflecting their ancestry.</p>
+            </div>
+            <div class="content-item">
+                <h4>Arunachal Pradesh</h4>
+                <p>Varies significantly by tribe. The Monpas wear woven skull-caps with tassels, and their women wear long, sleeveless coats over full-sleeved blouses, often accessorized with silver ornaments.</p>
+            </div>
+        </div>
+        
+        <blockquote class="muted" style="margin-top:var(--space-lg);font-size:15px; padding:12px; border-left:4px solid var(--color-secondary); background-color:rgba(14, 165, 164, 0.05); border-radius:var(--radius-sm)">
+            **Handloom Heritage:** The textiles of the North East are primarily hand-woven, reflecting a deep, unbroken tradition of craftsmanship. Each pattern and colour often carries a specific symbolic meaning related to the tribe, clan, or occasion.
+        </blockquote>
+
+    </div>
+
+    <footer>
+      <div>© 2025 **IIT Patna** · North East Fest Project</div>
+      <div class="muted">Cultural Board: <a href="mailto:cultural@iitp.ac.in" style="color:var(--color-muted); text-decoration:none;">cultural@iitp.ac.in</a></div>
+    </footer>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    const swiper = new Swiper(".mySwiper", {
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      loop: true,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
+      coverflowEffect: {
+        rotate: 40,      /* The angle for the cylindrical curve */
+        stretch: 0,
+        depth: 150,      /* Creates the 3D distance */
+        modifier: 1,
+        slideShadows: true,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
+  </script>
+</body>
+</html>
